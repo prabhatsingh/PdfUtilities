@@ -1,6 +1,29 @@
+# User-specific files
 *.suo
 *.user
-_ReSharper.*
-bin
-obj
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+**/bin/
+**/obj/
+
+# Visual Studio 2015 cache/options directory
+.vs/
+
 packages
+/pdflibrary/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/commonutilities/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/pdfconsole/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/pdfconsole/obj/Debug/Interop.IWshRuntimeLibrary.dll
+/pdfconsole/obj/Debug/PdfConsole.csproj.CoreCompileInputs.cache
+/pdfconsole/obj/Debug/PdfConsole.csproj.ResolveComReference.cache
