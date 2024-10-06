@@ -1,4 +1,6 @@
 ﻿using ImageMagick;
+using ImageMagick.Formats;
+using Libraries.CommonUtilities;
 using System.Collections.Generic;
 using System.IO;
 
@@ -73,7 +75,34 @@ namespace PdfLibrary
 
         public void PdfToImage(string inputfile)
         {
-            throw new System.NotImplementedException();
+            int pagecount = new ITextHelper().GetPageCount(inputfile);
+
+            var outputpath = FileUtilities.GetOutputPath(inputfile, Libraries.CommonUtilities.Models.ActionType.PDFTOIMAGE, formatChange: true, newExtension: ".jpeg", hasMultipleOutput: pagecount > 1, outputNameFormat: "{0}_page_{1}");
+
+            MagickReadSettings settings = new MagickReadSettings()
+            {
+                Density = new Density(300, 300)
+            };
+
+            settings.SetDefines(new PdfReadDefines() { Interpolate = true });
+
+            MagickNET.SetGhostscriptDirectory(Path.GetDirectoryName(GhostScriptHelper.GetGhostscriptVersion().DllPath));
+
+            using (MagickImageCollection images = new MagickImageCollection(inputfile, settings))
+            { 
+                int page = 1;
+
+                foreach (MagickImage image in images)
+                {
+                    image.Alpha(AlphaOption.Remove);
+
+                    var outputfilename = string.Format(outputpath, Path.GetFileNameWithoutExtension(inputfile), page);
+
+                    image.Write(outputfilename);
+
+                    page++;
+                }
+            }
         }
 
         public void PrintPdf(string inputfile)

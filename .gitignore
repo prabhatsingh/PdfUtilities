@@ -21,9 +21,4 @@ bld/
 .vs/
 
 packages
-/pdflibrary/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-/commonutilities/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-/pdfconsole/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-/pdfconsole/obj/Debug/Interop.IWshRuntimeLibrary.dll
-/pdfconsole/obj/Debug/PdfConsole.csproj.CoreCompileInputs.cache
-/pdfconsole/obj/Debug/PdfConsole.csproj.ResolveComReference.cache
+**/*.user

@@ -1,8 +1,6 @@
 ﻿using Ghostscript.NET;
 using Ghostscript.NET.Processor;
 using Ghostscript.NET.Rasterizer;
-using Libraries.CommonUtilities;
-using Libraries.CommonUtilities.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,37 +77,7 @@ namespace PdfLibrary
 
         public void PdfToImage(string inputfile)
         {
-            GhostscriptVersionInfo _lastInstalledVersion = GetGhostscriptVersion();
-
-            int pageCount = GetPageCount(inputfile);
-
-            var outputpath = FileUtilities.GetOutputPath(inputfile, ActionType.PDFTOIMAGE, formatChange: true, newExtension: ".jpeg", hasMultipleOutput: pageCount > 1, outputNameFormat: "{0}_Page_{1}");
-
-            GhostscriptPngDevice img = new GhostscriptPngDevice
-            {
-                GraphicsAlphaBits = GhostscriptImageDeviceAlphaBits.V_4,
-                TextAlphaBits = GhostscriptImageDeviceAlphaBits.V_4,
-                Resolution = 600,
-                PostScript = string.Empty
-            };
-
-            img.InputFiles.Add(inputfile);
-
-            for (int i = 1; i <= pageCount; i++)
-            {
-                img.Pdf.FirstPage = i;
-                img.Pdf.LastPage = i;
-
-                var outputfilename = string.Format(outputpath, Path.GetFileNameWithoutExtension(inputfile), i);
-
-                if (File.Exists(outputfilename))
-                    File.Delete(outputfilename);
-
-                img.OutputPath = outputfilename;                
-                img.Process(_lastInstalledVersion, false, null);
-
-                Console.WriteLine("Generated {0}", Path.GetFileName(outputfilename));
-            }
+            throw new System.NotImplementedException();
         }
 
         public int GetPageCount(string inputfile)

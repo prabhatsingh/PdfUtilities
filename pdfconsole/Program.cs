@@ -70,7 +70,7 @@ namespace PdfConsole
                 switch (actioninfo.ActionType)
                 {
                     case ActionType.PDFTOIMAGE:
-                        new PdfActions(new GhostScriptHelper()).Run(actioninfo);
+                        new PdfActions(new MagickHelper()).Run(actioninfo);
                         break;
                     case ActionType.LOOKSCANNED:
                         new PdfActions(new MagickHelper()).Run(actioninfo);

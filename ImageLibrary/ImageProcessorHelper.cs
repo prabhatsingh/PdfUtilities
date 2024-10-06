@@ -1,5 +1,6 @@
 ﻿using ImageProcessor;
 using ImageProcessor.Imaging.Formats;
+using ImageProcessor.Processors;
 using Libraries.CommonUtilities;
 using Libraries.CommonUtilities.Models;
 using System.Collections.Generic;
@@ -24,14 +25,13 @@ namespace ImageLibrary
         {
             var outputpath = inputfile.GetOutputPath(ActionType.OPTIMIZE);
 
-            ISupportedImageFormat format = new JpegFormat();
             Size size = new Size(finalsize, 0);
 
-            using (ImageFactory imageFactory = new ImageFactory(preserveExifData: true))
+            using (ImageFactory imageFactory = new ImageFactory(preserveExifData: false))
             {
                 if (retobj)
                 {
-                    using (Image sourceImg = imageFactory.Load(inputfile).Resize(size).Format(format).Image)
+                    using (Image sourceImg = ResizeImage(imageFactory.Load(inputfile), size).Image)
                     {
                         var clonedImg = new Bitmap(sourceImg.Width, sourceImg.Height, PixelFormat.Format32bppArgb);
 
@@ -46,10 +46,15 @@ namespace ImageLibrary
                     }
                 }
                 else
-                    imageFactory.Load(inputfile).Resize(size).Format(format).Save(outputpath);
+                    ResizeImage(imageFactory.Load(inputfile), size).Save(outputpath);
 
                 return imageFactory.Load(inputfile).Image;
             }
+        }
+
+        private ImageFactory ResizeImage(ImageFactory image, Size finalsize)
+        {
+            return image.Format(new JpegFormat()).Resolution(8,10,ImageProcessor.Imaging.MetaData.PropertyTagResolutionUnit.Inch).Quality(40).Resize(finalsize);
         }
 
         public Image Rotate(string inputfile, float rotation, bool retobj = false)
